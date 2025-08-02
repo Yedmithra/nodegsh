@@ -3,7 +3,8 @@ export default {
         const crypto = window.crypto || window.msCrypto;
         let array = new Uint32Array(1);
         
-        return crypto.getRandomValues(array);
+        //return crypto.getRandomValues(array);
+        return crypto.getRandomValues(array)[0].toString(36);
     },
 
 
@@ -114,8 +115,10 @@ export default {
                     urls: ["stun:eu-turn4.xirsys.com"]
                 },
                 {
-                    username: "ml0jh0qMKZKd9P_9C0UIBY2G0nSQMCFBUXGlk6IXDJf8G2uiCymg9WwbEJTMwVeiAAAAAF2__hNSaW5vbGVl",
-                    credential: "4dd454a6-feee-11e9-b185-6adcafebbb45",
+                   // username: "ml0jh0qMKZKd9P_9C0UIBY2G0nSQMCFBUXGlk6IXDJf8G2uiCymg9WwbEJTMwVeiAAAAAF2__hNSaW5vbGVl",
+                    //credential: "4dd454a6-feee-11e9-b185-6adcafebbb45",
+                    username: process.env.XIRSYS_USERNAME,
+                    credential: process.env.XIRSYS_CREDENTIAL,
                     urls: [
                         "turn:eu-turn4.xirsys.com:80?transport=udp",
                         "turn:eu-turn4.xirsys.com:3478?transport=tcp"
