@@ -8,6 +8,9 @@ let path = require( 'path' );
 let favicon = require( 'serve-favicon' );
 const { normalize } = require('path');
 
+// Supprimer l'en-tête X-Powered-By pour une meilleure sécurité
+app.disable('x-powered-by');
+
 app.use( favicon( path.join( __dirname, 'favicon.ico' ) ) );
 app.use( '/assets', express.static( path.join( __dirname, 'assets' ) ) );
 
@@ -24,10 +27,16 @@ io.of( '/stream' ).on( 'connection', stream );
 
 //Connection au port
 var port = normalizePort(process.env.PORT || '3000');
-app.set('port',port)
+app.set('port',port);
 
-server.listen( port );
-console.log("le serveur est joingnable sur le port 3000");
+//server.listen( port );
+//console.log("le serveur est joingnable sur le port 3000");
+server.listen(port, () => {
+    console.log(`le serveur est joingnable sur le port ${port}`);
+});
+server.on('error', (err) => {
+    console.error('Erreur de binding:', err);
+});
 
 //Fonction de gestion des ports
 function normalizePort(val){
